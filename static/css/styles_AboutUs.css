@@ -1,0 +1,144 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0;
+    background: url(../img/backgr.png) center , no-repeat;
+}
+*
+*:before,
+*:after{
+    box-sizing: border-box;
+}
+.conteiner {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/*header*/
+
+.header{
+    /*margin-top: 30px;*/
+    width: 100%;
+    position: fixed;
+    top: 0; /*Прижали к верху*/
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: #000000;
+}
+/*Объединили несколько элементво в блоке и один отправили влево, другой вправо , затем выровняли на одной линии*/
+.header_inner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo{
+    margin-left: 30px;
+    font-size: 10px;
+    font-weight: 400;
+    color: #fff;
+}
+
+/*nav*/
+
+.nav{
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.nav_link{
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 20px;
+    color: #fff;
+    text-decoration: none;
+    position:relative;
+    transition: color .2s linear; /*более плавный переход цвета*/
+}
+.nav_link:after{
+    content: " ";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #fce38a;
+
+    opacity: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    transition: opacity .2s linear;
+}
+.nav_link:hover{
+    color: #fce38a;
+}
+.nav_link:hover:after{
+    opacity: 1; /*более плавный переход линиии*/
+}
+
+.content_header{
+    padding: 25px;
+    border: 2px solid #8B4513;
+    border-radius: 30px;
+    width: 70%;
+    max-width: 1400px;
+    height: auto;
+    margin: 100px auto 0;
+    color: #333;
+    background-color: #fff;
+}
+
+.content_header_inner{
+    font-family: 'Jura', sans-serif;
+    text-align: center;
+}
+
+
+
+/* Style the video: 100% width and height to cover the entire window */
+#myVideo {
+
+    margin-left: 15%;
+    right: 0;
+    bottom: 0;
+    width: 70%;
+
+}
+
+/* Add some content at the bottom of the video/page */
+.content {
+    margin-left: 15%;
+    bottom: 0;
+    background: rgba(0, 0, 0);
+    color: #f1f1f1;
+    width: 1055px;
+    padding: 5px;
+}
+
+/* Style the button used to pause/play the video */
+#myBtn{
+    display: inline-block;
+    vertical-align: top;
+    padding: 8px 30px;
+    border: 3px solid #fff;
+    text-align: center;
+    color: #000;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 700;
+    transition: background .2s linear;
+    transition: color .2s linear;
+}
+#myBtn:hover{
+    background-color: #fff;
+    color: #333;
+}
+
+
+
+
+
+

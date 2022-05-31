@@ -1,0 +1,172 @@
+{% load static %}
+<!DOCTORATE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static "css/style_Register.css" %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@700&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/telegramform/js/telegramform.js"></script>
+  
+    <title>CoolerBook</title>
+</head>
+<body>
+   
+<header class="header">
+    <div class = "container">
+        <div class="header_inner">
+            <div class="logo">
+                <h1>CoolerBook</h1>
+            </div>
+            <nav class="nav">
+                <a class = "nav_link" href="CoolerBook.html" >Главная</a>
+                <a class = "nav_link" href="CoolerBookAboutUs.html">О нас</a>
+                <a class = "nav_link" href="CoolerBookArticle.html" >Статьи</a>
+                <a class = "nav_link" href="CoolerBookContacts.html">Контакты</a>
+                <a class = "nav_link" href="CoolerBookRegister.html">Войти</a>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<div id="contact_form">
+<form action="" id = "regForm" method="post">
+  {% csrf_token %}
+    <h2  title="Форма регистрации на сайте">Регистрация</h2>
+    <div class="group">
+        <label>Имя пользователя:</label>
+        <input type="text" id="name" name="name" pattern="^[A-Z]{1}[a-z]+$" maxlength="8"  required>
+    </div>
+    <div class="group">
+        <label>Возраст:</label>
+        <input type="number" id="age" name="age" max = "100" min = "10" required>
+    </div>
+    <div class="group">
+        <label>Адрес электронной почты:</label>
+        <input type="email" id="mail" name="mail" required>
+    </div>
+    <div class="group">
+        <label>Пароль:</label>
+        <input type="password" id="pass" name="pass" pattern="^[a-zA-Z0-9]+$" minlength="5" maxlength="20" required>
+    </div>
+    <div class="group">
+        <center><button>Регистрация</button></center>
+    </div>
+</form>
+</div>
+</body>
+</html>
+<script>
+document.addEventListener("DOMContentLoaded", function() { // событие загрузки страницы
+
+    // выбираем на странице все элементы типа  и input
+    document.querySelectorAll('input').forEach(function(e) {
+        // если данные значения уже записаны в sessionStorage, то вставляем их в поля формы
+        // путём этого мы как раз берём данные из памяти браузера, если страница была случайно перезагружена
+        if(e.value === '') e.value = window.sessionStorage.getItem(e.name, e.value);
+        // на событие ввода данных (включая вставку с помощью мыши) вешаем обработчик
+        e.addEventListener('input', function() {
+            // и записываем в sessionStorage данные, в качестве имени используя атрибут name поля элемента ввода
+            window.sessionStorage.setItem(e.name, e.value);
+        })
+    })
+
+}); 
+  
+  document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll("input").forEach(function (e) {
+    if (e.value === "") e.value = window.localStorage.getItem(e.name, e.value);
+
+    e.addEventListener("input", function () {
+      window.localStorage.setItem(e.name, e.value);
+    });
+  });
+});
+  
+    const name = document.getElementById("name");
+    name.addEventListener("input", function (event) {
+
+        if (name.validity.typeMismatch) {
+            name.setCustomValidity("Введите правильное имя!");
+        }
+        else if (name.validity.tooLong){
+            name.setCustomValidity("Достигнут лимит!");
+        }
+        else {
+            name.setCustomValidity("");
+        }
+    });
+
+    const age = document.getElementById("age");
+    age.addEventListener("input", function (event) {
+        if (age.validity.typeMismatch) {
+            age.setCustomValidity("Введите правильно имя!");
+        }
+        else if(age.validity.rangeOverflow){
+            age.setCustomValidity("Введите правильное число!");
+        }
+        else if(age.validity.rangeUnderflow){
+            age.setCustomValidity("Введите правильное число!");
+        }
+        else {
+            age.setCustomValidity("");
+        }
+    });
+
+    const email = document.getElementById("mail");
+    email.addEventListener("input", function (event) {
+        if (email.validity.typeMismatch) {
+            email.setCustomValidity("Введите правильно (@)!");
+        } else {
+            email.setCustomValidity("");
+        }
+    });
+    const pass = document.getElementById("pass");
+    pass.addEventListener("input", function (event) {
+        if (pass.validity.patternMismatch) {
+            pass.setCustomValidity("Введите правильный пароль[a-z,A-Z,0-9]!");
+        }
+        else if (pass.validity.tooLong){
+            pass.setCustomValidity("Достигнут лимит!");
+        }
+        else {
+            pass.setCustomValidity("");
+        }
+    });
+  const form = document.getElementById("regForm");
+
+  form.addEventListener("submit", e => {
+  e.preventDefault();
+  
+  var nick = document.getElementById("name").value;
+  var mail = document.getElementById("mail").value;
+  var age = document.getElementById("age").value;
+  
+  var msg = 'Welcome to our site!%0A<b>Your nickname : </b>'+nick+'%0A<b>Your eMail : </b>'+mail+'%0A<b>Your age : </b>'+age;
+    
+  var chatid = "-1001789210903";
+  var token = "5016382576:AAGsRw7EoxmJ-HwvqjyJJMPUOWIp0mRskZA";
+  var z=$.ajax({
+  type: "POST",
+  url: "https://api.telegram.org/bot"+token+"/sendMessage?chat_id="+chatid,
+  data: "parse_mode=html&text="+msg,
+ beforeSend: function () {
+                // Вывод текста в процессе отправки
+                $('#regForm').html('<p style="text-align:center">Отправка...</p>');
+            },
+            success: function (data) {
+                // Вывод текста результата отправки
+                $('#regForm').html('<p style="text-align:center">Вы зарегистрированы!</p>');
+              window.sessionStorage.clear();
+              localStorage.clear();
+            },
+    error: function (jqXHR, text, error) {
+                // Вывод текста ошибки отправки
+                $('#regForm').html(error);
+            }
+         
+  });
+  console.log("Message succesfully sended!")
+  })
+</script>
